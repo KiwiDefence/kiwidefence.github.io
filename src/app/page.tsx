@@ -6,6 +6,7 @@ import BorderGlow from '@/components/BorderGlow'
 import SplitText from '@/components/SplitText'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
 const HeroScene = dynamic(() => import('@/components/HeroScene'), { ssr: false })
 
 const navItems = [
@@ -24,7 +25,7 @@ export default function Home() {
       <nav className="navbar" role="navigation" aria-label="Main navigation">
         <div className="container">
           <a href="#" className="navbar-brand">
-            <img src="/logo.svg" alt="Kiwi Defence" className="logo" />
+            <img src={`${basePath}/logo.svg`} alt="Kiwi Defence" className="logo" />
             Kiwi Defence
           </a>
           <button
