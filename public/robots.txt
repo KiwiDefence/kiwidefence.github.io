@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kiwidefence.github.io/KiwiDefence-web/sitemap.xml

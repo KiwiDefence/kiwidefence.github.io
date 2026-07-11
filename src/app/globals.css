@@ -24,6 +24,7 @@
   --font-sans: var(--font-ibm-mono), 'IBM Plex Mono', monospace;
   --font-mono: var(--font-ibm-mono), 'IBM Plex Mono', monospace;
   --font-display: var(--font-syncopate), 'Syncopate', sans-serif;
+  --font-code: var(--font-source-code), 'Source Code Pro', monospace;
 }
 
 [data-theme="light"] {
@@ -49,7 +50,7 @@ html {
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-code);
   background: var(--bg);
   color: var(--fg);
   line-height: 1.6;
@@ -194,7 +195,7 @@ img, svg {
 }
 
 .section-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-code);
   font-size: 0.75rem;
   color: var(--gray-300);
   letter-spacing: 0.15em;
@@ -203,18 +204,21 @@ img, svg {
 }
 
 .section-title {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
   margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  font-family: var(--font-display);
 }
 
 .section-subtitle {
-  font-size: 1.125rem;
+  font-size: 1rem;
   color: var(--gray-300);
   max-width: 600px;
   line-height: 1.7;
+  font-family: var(--font-code);
 }
 
 /* Hero */
@@ -260,11 +264,12 @@ img, svg {
 }
 
 .split-parent.hero-subtitle {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   color: var(--gray-300);
   line-height: 1.7;
   margin-bottom: 2.5rem;
   max-width: 640px;
+  font-family: var(--font-code);
 }
 
 .hero p {
@@ -284,7 +289,7 @@ img, svg {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: var(--font-sans);
+  font-family: var(--font-code);
   font-size: 0.875rem;
   font-weight: 600;
   padding: 0.875rem 2rem;
@@ -369,12 +374,14 @@ img, svg {
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
+  font-family: var(--font-code);
 }
 
 .feature-item p {
   font-size: 0.875rem;
   color: var(--gray-300);
   line-height: 1.7;
+  font-family: var(--font-code);
 }
 
 /* Contact section */
@@ -382,12 +389,14 @@ img, svg {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 1rem;
+  font-family: var(--font-code);
 }
 
 .contact-info p {
   color: var(--gray-300);
   line-height: 1.7;
   margin-bottom: 1.5rem;
+  font-family: var(--font-code);
 }
 
 .contact-detail {
@@ -397,6 +406,7 @@ img, svg {
   margin-bottom: 1rem;
   font-size: 0.875rem;
   color: var(--gray-300);
+  font-family: var(--font-code);
 }
 
 /* Footer */
@@ -424,7 +434,7 @@ img, svg {
 .footer p {
   font-size: 0.8125rem;
   color: var(--gray-400);
-  font-family: var(--font-mono);
+  font-family: var(--font-code);
 }
 
 .footer-linkedin {
@@ -446,6 +456,7 @@ img, svg {
   font-size: 0.8125rem;
   color: var(--gray-400);
   transition: color 0.2s;
+  font-family: var(--font-code);
 }
 
 .footer-links a:hover {

@@ -7,7 +7,10 @@ import SplitText from '@/components/SplitText'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
-const HeroScene = dynamic(() => import('@/components/HeroScene'), { ssr: false })
+const HeroScene = dynamic(() => import('@/components/HeroScene'), {
+  ssr: false,
+  loading: () => null,
+})
 
 const navItems = [
   { href: '#about', label: 'About' },

@@ -91,6 +91,7 @@ function ParticleField({ isLight }: { isLight: boolean }) {
 
 export default function HeroScene() {
   const [isLight, setIsLight] = useState(false)
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
     const observer = new MutationObserver(() => {
@@ -104,11 +105,14 @@ export default function HeroScene() {
 
   return (
     <div
+      className="hero-scene"
       style={{
         position: 'absolute',
         inset: 0,
         zIndex: 0,
         pointerEvents: 'none',
+        opacity: ready ? 1 : 0,
+        transition: 'opacity 1s ease',
       }}
     >
       <Canvas
@@ -116,6 +120,7 @@ export default function HeroScene() {
         dpr={[1, 1.5]}
         gl={{ antialias: false, alpha: true }}
         style={{ background: 'transparent' }}
+        onCreated={() => setReady(true)}
       >
         <ParticleField isLight={isLight} />
       </Canvas>
