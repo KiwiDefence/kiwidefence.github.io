@@ -24,17 +24,17 @@ const sourceCodePro = Source_Code_Pro({
   variable: '--font-source-code',
 })
 
-const siteUrl = 'https://kiwidefence.github.io/KiwiDefence-web'
+const siteUrl = 'https://kiwidefence.github.io'
 
 export const metadata: Metadata = {
-  title: 'Kiwi Defence — Cybersecurity',
+  title: 'Kiwi Defence | Cybersecurity',
   description:
-    'Kiwi Defence provides enterprise-grade cybersecurity solutions — penetration testing, threat monitoring, incident response, and security consulting.',
+    'Kiwi Defence provides enterprise-grade cybersecurity solutions. Penetration testing, threat monitoring, incident response, and security consulting.',
   metadataBase: new URL(siteUrl),
   openGraph: {
-    title: 'Kiwi Defence — Cybersecurity',
+    title: 'Kiwi Defence | Cybersecurity',
     description:
-      'Enterprise-grade cybersecurity solutions — penetration testing, threat monitoring, incident response, and security consulting.',
+      'Enterprise-grade cybersecurity solutions. Penetration testing, threat monitoring, incident response, and security consulting.',
     url: siteUrl,
     siteName: 'Kiwi Defence',
     type: 'website',
@@ -43,15 +43,15 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Kiwi Defence — Cybersecurity',
+        alt: 'Kiwi Defence | Cybersecurity',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Kiwi Defence — Cybersecurity',
+    title: 'Kiwi Defence | Cybersecurity',
     description:
-      'Enterprise-grade cybersecurity solutions — penetration testing, threat monitoring, incident response, and security consulting.',
+      'Enterprise-grade cybersecurity solutions. Penetration testing, threat monitoring, incident response, and security consulting.',
     images: ['/og-image.png'],
   },
 }
