@@ -151,7 +151,7 @@ export default function Home() {
           <div className="services-grid">
             {[
               {
-                title: 'Custom Identity & Access Management',
+                title: 'Identity & Access Management',
                 desc: 'Precision-engineered access architectures and robust authentication frameworks tailored to your organisation.',
               },
               {
