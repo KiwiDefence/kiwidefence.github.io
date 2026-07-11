@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og-image.svg',
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Kiwi Defence — Cybersecurity',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title: 'Kiwi Defence — Cybersecurity',
     description:
       'Enterprise-grade cybersecurity solutions — penetration testing, threat monitoring, incident response, and security consulting.',
-    images: ['/og-image.svg'],
+    images: ['/og-image.png'],
   },
 }
 
