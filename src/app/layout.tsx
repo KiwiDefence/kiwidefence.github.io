@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { IBM_Plex_Mono, Source_Code_Pro, Syncopate } from 'next/font/google'
+import ChunkLoadRecovery from '@/components/ChunkLoadRecovery'
 import ThemeProvider from '@/components/ThemeProvider'
 import './globals.css'
 
@@ -24,7 +25,10 @@ const sourceCodePro = Source_Code_Pro({
   variable: '--font-source-code',
 })
 
-const siteUrl = 'https://kiwidefence.github.io'
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  process.env.SITE_URL ??
+  'https://kiwidefence.com'
 
 export const metadata: Metadata = {
   title: 'Kiwi Defence | Cybersecurity',
@@ -64,6 +68,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${ibmPlexMono.variable} ${syncopate.variable} ${sourceCodePro.variable}`} data-theme="dark">
       <body>
+        <ChunkLoadRecovery />
         <ThemeProvider>
           {children}
         </ThemeProvider>

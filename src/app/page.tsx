@@ -1,60 +1,22 @@
 'use client'
 
-import { useState } from 'react'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import BorderGlow from '@/components/BorderGlow'
+import SiteFooter from '@/components/SiteFooter'
+import SiteNav from '@/components/SiteNav'
 import SplitText from '@/components/SplitText'
-import ThemeSwitcher from '@/components/ThemeSwitcher'
+import { homeServices } from '@/lib/services'
 
 const HeroScene = dynamic(() => import('@/components/HeroScene'), {
   ssr: false,
   loading: () => null,
 })
 
-const navItems = [
-  { href: '#about', label: 'About' },
-  { href: '#services', label: 'Services' },
-  { href: '#why-us', label: 'Why Us' },
-  { href: '#contact', label: 'Contact' },
-]
-
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false)
-
   return (
     <>
-      {/* Navbar */}
-      <nav className="navbar" role="navigation" aria-label="Main navigation">
-        <div className="container">
-          <a href="#" className="navbar-brand">
-            <img src="/logo.svg" alt="Kiwi Defence" className="logo" />
-            Kiwi Defence
-          </a>
-          <button
-            className="mobile-toggle"
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              {menuOpen ? (
-                <path d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path d="M3 12h18M3 6h18M3 18h18" />
-              )}
-            </svg>
-          </button>
-          <ul className={`navbar-links${menuOpen ? ' open' : ''}`}>
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <a href={item.href} onClick={() => setMenuOpen(false)}>
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
+      <SiteNav />
 
       {/* Hero */}
       <section className="hero">
@@ -115,9 +77,9 @@ export default function Home() {
               <a href="#contact" className="btn btn-primary">
                 Get in touch →
               </a>
-              <a href="#services" className="btn btn-secondary">
+              <Link href="/services" className="btn btn-secondary">
                 Our services
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -149,22 +111,9 @@ export default function Home() {
             unique risk profile and compliance requirements.
           </p>
           <div className="services-grid">
-            {[
-              {
-                title: 'Identity & Access Management',
-                desc: 'Precision-engineered access architectures and robust authentication frameworks tailored to your organisation.',
-              },
-              {
-                title: 'Automated Penetration Testing',
-                desc: 'Advanced reporting engines that turn offensive security data into structured, actionable intelligence.',
-              },
-              {
-                title: 'Enterprise Vulnerability Scanning',
-                desc: 'Deep-inspection scanning tools that map attack surfaces, track CVEs, and surface hidden infrastructure flaws.',
-              },
-            ].map((svc) => (
+            {homeServices.map((svc) => (
               <BorderGlow
-                key={svc.title}
+                key={svc.slug}
                 backgroundColor="var(--bg)"
                 borderRadius={10}
                 glowRadius={20}
@@ -185,6 +134,11 @@ export default function Home() {
                 </div>
               </BorderGlow>
             ))}
+          </div>
+          <div className="services-more">
+            <Link href="/services" className="btn btn-secondary">
+              Explore Kiwi Scanner →
+            </Link>
           </div>
         </div>
       </section>
@@ -258,13 +212,6 @@ export default function Home() {
               </svg>
               <span>contact@kiwidefence.com</span>
             </div>
-            <div className="contact-detail">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
-              <span>Brașov, Romania</span>
-            </div>
             <div style={{ marginTop: '2rem' }}>
               <a
                 href="https://linkedin.com/company/kiwidefence"
@@ -282,25 +229,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-left">
-            <p>&copy; {new Date().getFullYear()} Kiwi Defence</p>
-            <a aria-label="LinkedIn" href="https://linkedin.com/company/kiwidefence" rel="noopener noreferrer" target="_blank" className="footer-linkedin" style={{ mixBlendMode: 'luminosity' }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-              </svg>
-            </a>
-          </div>
-          <div className="footer-links">
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#contact">Contact</a>
-          </div>
-          <ThemeSwitcher />
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   )
 }

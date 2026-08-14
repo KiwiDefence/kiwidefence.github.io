@@ -1,0 +1,14 @@
+services:
+  web:
+    build:
+      context: .
+      args:
+        SITE_URL: ${SITE_URL:-https://kiwidefence.com}
+        NEXT_PUBLIC_KIWISCANNER_URL: ${NEXT_PUBLIC_KIWISCANNER_URL:-https://scanner.kiwidefence.com}
+    image: kiwidefence/web:latest
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      SITE_URL: ${SITE_URL:-https://kiwidefence.com}
+      NODE_ENV: production
+    restart: unless-stopped

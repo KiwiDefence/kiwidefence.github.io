@@ -67,9 +67,8 @@ function ParticleField({ isLight }: { isLight: boolean }) {
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
+            args={[positions, 3]}
             count={PARTICLE_COUNT}
-            array={positions}
-            itemSize={3}
           />
         </bufferGeometry>
         <pointsMaterial size={0.1} color={particleColor} transparent opacity={particleOpacity} sizeAttenuation />
@@ -78,9 +77,8 @@ function ParticleField({ isLight }: { isLight: boolean }) {
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
+            args={[linePositions, 3]}
             count={linePositions.length / 3}
-            array={linePositions}
-            itemSize={3}
           />
         </bufferGeometry>
         <lineBasicMaterial color={particleColor} transparent opacity={lineOpacity} />

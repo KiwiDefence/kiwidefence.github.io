@@ -1,8 +1,10 @@
 node_modules
 .next
 out
+.git
+.github
+*.md
+.env*
+!.env.example
 .DS_Store
 *.local
-.env
-.env.*
-!.env.example
