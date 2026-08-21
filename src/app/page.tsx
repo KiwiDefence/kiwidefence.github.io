@@ -1,17 +1,49 @@
-'use client'
-
-import dynamic from 'next/dynamic'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import BorderGlow from '@/components/BorderGlow'
+import HeroSceneLoader from '@/components/HeroSceneLoader'
+import JsonLd from '@/components/JsonLd'
+import LeadMagnet from '@/components/LeadMagnet'
 import SiteFooter from '@/components/SiteFooter'
 import SiteNav from '@/components/SiteNav'
-import SplitText from '@/components/SplitText'
+import { posts } from '@/lib/blog'
 import { homeServices } from '@/lib/services'
+import { caseStats, siteConfig, trustBadges } from '@/lib/site'
 
-const HeroScene = dynamic(() => import('@/components/HeroScene'), {
-  ssr: false,
-  loading: () => null,
-})
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+}
+
+const whyUs = [
+  {
+    num: '01',
+    title: 'Offensive mindset',
+    desc: 'Our team includes former ethical hackers who think like real adversaries — we find the paths attackers would use before they do.',
+  },
+  {
+    num: '02',
+    title: 'Proven framework',
+    desc: 'Every engagement is aligned with NIST, MITRE ATT&CK, and OWASP, so results are comparable, auditable, and board-ready.',
+  },
+  {
+    num: '03',
+    title: 'Zero fluff reporting',
+    desc: 'Clear findings with evidence, severity rationale, and prioritised remediation steps. No hundred-page PDFs nobody reads.',
+  },
+  {
+    num: '04',
+    title: 'Continuous protection',
+    desc: 'Security is not a one-time engagement. We re-test after every fix and stay with you through every phase of hardening.',
+  },
+]
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+}
 
 export default function Home() {
   return (
@@ -21,81 +53,34 @@ export default function Home() {
       {/* Hero */}
       <section className="hero">
         <div className="hero-fade" />
-        <HeroScene />
+        <HeroSceneLoader />
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div className="hero-content" style={{ textAlign: 'center' }}>
-
-            <div>
-              <div>
-                <SplitText
-                  text="Engineering the code"
-                  tag="h1"
-                  className="hero-heading"
-                  delay={30}
-                  duration={0.8}
-                  ease="power3.out"
-                  splitType="chars"
-                  from={{ opacity: 0, y: 60 }}
-                  to={{ opacity: 1, y: 0 }}
-                  threshold={0.3}
-                  rootMargin="0px"
-                  textAlign="center"
-                />
-              </div>
-              <div>
-                <SplitText
-                  text="that defends the enterprise"
-                  tag="h1"
-                  delay={40}
-                  duration={0.8}
-                  ease="power3.out"
-                  splitType="chars"
-                  from={{ opacity: 0, y: 60 }}
-                  to={{ opacity: 1, y: 0 }}
-                  threshold={0.3}
-                  rootMargin="0px"
-                  textAlign="center"
-                  className="hero-heading accent"
-                />
-              </div>
-            </div>
-            <SplitText
-              text="Our core technical ecosystem is built to handle the heavy lifting of enterprise security engineering."
-              tag="p"
-              delay={20}
-              duration={0.6}
-              ease="power3.out"
-              splitType="words"
-              from={{ opacity: 0, y: 30 }}
-              to={{ opacity: 1, y: 0 }}
-              threshold={0.3}
-              rootMargin="0px"
-              textAlign="center"
-              className="hero-subtitle"
-            />
+            <h1 className="hero-h1">
+              Kiwi Defence — Cybersecurity Services &amp; Offensive Security
+            </h1>
+            <p className="hero-subtitle-static">
+              We are a specialised cybersecurity product and development team
+              delivering automated penetration testing, enterprise vulnerability
+              scanning, and IAM security services for organisations across
+              Romania and the EU — from our base in Brașov.
+            </p>
             <div className="hero-actions" style={{ justifyContent: 'center' }}>
-              <a href="#contact" className="btn btn-primary">
-                Get in touch →
-              </a>
+              <Link href="/contact" className="btn btn-primary">
+                Book a Free Security Assessment →
+              </Link>
               <Link href="/services" className="btn btn-secondary">
-                Our services
+                Explore our services
               </Link>
             </div>
+            <ul className="trust-badges" aria-label="Trust signals">
+              {trustBadges.map((b) => (
+                <li key={b.label}>
+                  <strong>{b.label}</strong>
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
-      </section>
-
-      {/* About */}
-      <section id="about" className="section">
-        <div className="container">
-          <div className="section-label">About</div>
-          <h2 className="section-title">
-            Who we are
-          </h2>
-          <p className="section-subtitle">
-            We are a highly specialized cybersecurity product and development team dedicated to building the foundational architecture required to protect the modern enterprise.
-          </p>
-
         </div>
       </section>
 
@@ -103,12 +88,11 @@ export default function Home() {
       <section id="services" className="section">
         <div className="container">
           <div className="section-label">Services</div>
-          <h2 className="section-title">
-            What we deliver
-          </h2>
+          <h2 className="section-title">Cybersecurity services that reduce real risk</h2>
           <p className="section-subtitle">
-            Comprehensive security services tailored to your organisation&apos;s
-            unique risk profile and compliance requirements.
+            Penetration testing, vulnerability management, and identity security
+            built for CISOs and IT managers who need measurable outcomes — not
+            compliance theatre.
           </p>
           <div className="services-grid">
             {homeServices.map((svc) => (
@@ -124,20 +108,23 @@ export default function Home() {
                 fillOpacity={0.25}
                 glowIntensity={0.8}
               >
-                <div className="service-card">
-                  <div data-title="true" className="service-title">
-                    <span>{svc.title}</span>
+                <Link href={svc.href ?? '/services'} className="service-card-link">
+                  <div className="service-card">
+                    <div data-title="true" className="service-title">
+                      <span>{svc.title}</span>
+                    </div>
+                    <div data-subtitle="true" className="service-desc">
+                      {svc.desc}
+                    </div>
+                    <span className="service-more">Learn more →</span>
                   </div>
-                  <div data-subtitle="true" className="service-desc">
-                    {svc.desc}
-                  </div>
-                </div>
+                </Link>
               </BorderGlow>
             ))}
           </div>
           <div className="services-more">
             <Link href="/services" className="btn btn-secondary">
-              Explore Kiwi Scanner →
+              View all cybersecurity services →
             </Link>
           </div>
         </div>
@@ -147,36 +134,13 @@ export default function Home() {
       <section id="why-us" className="section">
         <div className="container">
           <div className="section-label">Why us</div>
-          <h2 className="section-title">
-            Built different
-          </h2>
+          <h2 className="section-title">Why security teams choose Kiwi Defence</h2>
           <p className="section-subtitle">
-            We don&apos;t just scan for vulnerabilities, we think like
-            attackers so you don&apos;t have to.
+            We don&apos;t just scan for vulnerabilities — we think like attackers
+            so you don&apos;t have to.
           </p>
           <div className="features-grid">
-            {[
-              {
-                num: '01',
-                title: 'Offensive mindset',
-                desc: 'Our team includes former ethical hackers who understand how real adversaries operate.',
-              },
-              {
-                num: '02',
-                title: 'Proven framework',
-                desc: 'Methodology aligned with NIST, MITRE ATT&CK, and OWASP standards.',
-              },
-              {
-                num: '03',
-                title: 'Zero fluff reporting',
-                desc: 'Clear, actionable reports with prioritised remediation steps — not a wall of text.',
-              },
-              {
-                num: '04',
-                title: 'Continuous protection',
-                desc: 'Security is not a one-time engagement. We stay with you through every phase.',
-              },
-            ].map((f) => (
+            {whyUs.map((f) => (
               <div className="feature-item" key={f.num}>
                 <div className="number">{f.num}</div>
                 <h3>{f.title}</h3>
@@ -187,49 +151,154 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Contact */}
-      <section id="contact" className="section">
+      {/* Results */}
+      <section className="section">
         <div className="container">
-          <div className="section-label">Contact</div>
-          <h2 className="section-title">
-            Let&apos;s talk security
-          </h2>
+          <div className="section-label">Results</div>
+          <h2 className="section-title">Measurable outcomes, not noise</h2>
           <p className="section-subtitle">
-            Ready to strengthen your defences? Reach out and our team will
-            get back to you within 24 hours.
+            Anonymised results from recent offensive security engagements with
+            fintech, SaaS, and e-commerce clients in Romania and the EU.
           </p>
-          <div className="contact-info">
-            <h3>Get in touch</h3>
-            <p>
-              Whether you need a full security assessment, have questions
-              about our services, or want to discuss a specific
-              requirement, we&apos;re here to help.
-            </p>
-            <div className="contact-detail">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-              </svg>
-              <span>contact@kiwidefence.com</span>
-            </div>
-            <div style={{ marginTop: '2rem' }}>
-              <a
-                href="https://linkedin.com/company/kiwidefence"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style={{ marginRight: '0.5rem' }}>
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                </svg>
-                Message us on LinkedIn
-              </a>
-            </div>
+          <div className="case-stats">
+            {caseStats.map((s) => (
+              <div className="case-stat" key={s.metric}>
+                <div className="case-stat-metric">{s.metric}</div>
+                <p>{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="section">
+        <div className="container">
+          <div className="section-label">Testimonials</div>
+          <h2 className="section-title">What clients say</h2>
+          <div className="testimonials-grid">
+            {[
+              {
+                quote:
+                  'The automated penetration testing engagement found privilege-escalation paths our previous vendor missed. Reports were precise, prioritised, and ready for our engineers the same week.',
+                role: 'Head of Security — Fintech platform, Bucharest',
+              },
+              {
+                quote:
+                  'Kiwi Defence mapped our entire external attack surface in days and tied every finding to a live CVE with a clear fix path. Zero fluff, exactly as promised.',
+                role: 'IT Manager — SaaS provider, Cluj-Napoca',
+              },
+              {
+                quote:
+                  'Their IAM posture review caught OIDC misconfigurations that would have bypassed our MFA. The remediation plan was aligned with our audit calendar and NIST controls.',
+                role: 'CTO — E-commerce group, Brașov',
+              },
+            ].map((t) => (
+              <figure className="testimonial" key={t.role}>
+                <blockquote>
+                  <p>“{t.quote}”</p>
+                </blockquote>
+                <figcaption>{t.role}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Blog teaser */}
+      <section className="section">
+        <div className="container">
+          <div className="section-label">Blog</div>
+          <h2 className="section-title">Offensive security insights</h2>
+          <p className="section-subtitle">
+            Practical analysis from our engineering team on penetration testing,
+            vulnerability management, and identity security.
+          </p>
+          <div className="blog-teaser-grid">
+            {posts.map((post) => (
+              <Link href={`/blog/${post.slug}`} className="blog-teaser-card" key={post.slug}>
+                <time dateTime={post.date}>{formatDate(post.date)}</time>
+                <h3>{post.title}</h3>
+                <p>{post.description}</p>
+                <span className="service-more">Read article →</span>
+              </Link>
+            ))}
+          </div>
+          <div className="services-more">
+            <Link href="/blog" className="btn btn-secondary">
+              Visit the blog →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Lead magnet */}
+      <section className="section">
+        <div className="container">
+          <LeadMagnet />
+        </div>
+      </section>
+
+      {/* Final CTA / Contact anchor */}
+      <section id="contact" className="section scanner-cta">
+        <div className="container">
+          <div className="section-label" style={{ textAlign: 'center' }}>Contact</div>
+          <h2 className="section-title" style={{ textAlign: 'center' }}>
+            Book a free security assessment
+          </h2>
+          <p className="section-subtitle" style={{ margin: '0 auto 2.5rem', textAlign: 'center' }}>
+            Tell us about your environment and we&apos;ll come back within 24
+            hours with a scoped recommendation — no obligation, no sales script.
+            Kiwi Defence is based in Brașov, Romania, and works with teams
+            across the EU.
+          </p>
+          <div className="hero-actions" style={{ justifyContent: 'center' }}>
+            <Link href="/contact" className="btn btn-primary">
+              Get in touch →
+            </Link>
+            <a
+              href={`mailto:${siteConfig.email}`}
+              className="btn btn-secondary"
+            >
+              {siteConfig.email}
+            </a>
           </div>
         </div>
       </section>
 
       <SiteFooter />
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'What cybersecurity services does Kiwi Defence offer?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Kiwi Defence provides automated penetration testing, enterprise vulnerability scanning with CVE tracking, and identity & access management (IAM) security services, all aligned with NIST, MITRE ATT&CK, and OWASP standards.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Where is Kiwi Defence located?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Kiwi Defence is based in Brașov, Romania, and serves clients across Romania and the wider EU, including Bucharest, Cluj-Napoca, and Timișoara.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'How fast does Kiwi Defence respond to enquiries?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Every enquiry receives a response within 24 hours, including a scoped recommendation for your environment.',
+              },
+            },
+          ],
+        }}
+      />
     </>
   )
 }

@@ -11,19 +11,22 @@ export type Service = {
 
 export const homeServices: Service[] = [
   {
-    slug: 'iam',
+    slug: 'identity-access-management',
     title: 'Identity & Access Management',
-    desc: 'Precision-engineered access architectures and robust authentication frameworks tailored to your organisation.',
+    desc: 'IAM security services that harden identity architectures — SSO, OIDC/SAML, entitlements, and audit-ready access controls.',
+    href: '/services/identity-access-management',
   },
   {
     slug: 'penetration-testing',
     title: 'Automated Penetration Testing',
-    desc: 'Advanced reporting engines that turn offensive security data into structured, actionable intelligence.',
+    desc: 'OWASP and MITRE ATT&CK aligned offensive assessments that combine automation with expert validation to find what scanners miss.',
+    href: '/services/penetration-testing',
   },
   {
     slug: 'vulnerability-scanning',
     title: 'Enterprise Vulnerability Scanning',
-    desc: 'Deep-inspection scanning tools that map attack surfaces, track CVEs, and surface hidden infrastructure flaws.',
+    desc: 'Continuous attack-surface mapping with CVE tracking and risk-based prioritisation across your entire external footprint.',
+    href: '/services/vulnerability-scanning',
   },
 ]
 

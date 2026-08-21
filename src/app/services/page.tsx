@@ -1,16 +1,59 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Breadcrumb from '@/components/Breadcrumb'
+import CtaBand from '@/components/CtaBand'
 import SiteFooter from '@/components/SiteFooter'
 import SiteNav from '@/components/SiteNav'
+import { kiwiScanner } from '@/lib/services'
+import { siteConfig } from '@/lib/site'
 
 export const metadata: Metadata = {
-  title: 'Kiwi Scanner | Kiwi Defence',
+  title: 'Cybersecurity Services — Penetration Testing, Scanning & IAM',
   description:
-    'Kiwi Scanner — authorized vulnerability assessment for web applications and IAM posture. Powered by a native Kiwi Engine LLM agent. Start your 7-day free trial.',
+    'Cybersecurity services for enterprises in Romania & the EU: automated penetration testing, enterprise vulnerability scanning, and IAM security. Brașov based.',
+  alternates: { canonical: '/services' },
+  openGraph: {
+    title: 'Cybersecurity Services | Kiwi Defence — Brașov, Romania',
+    description:
+      'Automated penetration testing, enterprise vulnerability scanning, and IAM security services aligned with NIST, MITRE ATT&CK, and OWASP.',
+    url: '/services',
+  },
 }
 
-const scannerUrl =
-  process.env.NEXT_PUBLIC_KIWISCANNER_URL ?? 'https://scanner.kiwidefence.com'
+const scannerUrl = siteConfig.scannerUrl
+
+const serviceCards = [
+  {
+    href: '/services/penetration-testing',
+    title: 'Automated Penetration Testing',
+    desc: 'Continuous offensive assessments combining automated playbooks with senior engineer validation. OWASP and MITRE ATT&CK aligned, with zero-fluff reporting.',
+    points: [
+      'Weekly or monthly cycles matched to your release cadence',
+      'Web apps, APIs, network perimeter, and authentication flows',
+      'Executive summary + engineering-ready technical reports',
+    ],
+  },
+  {
+    href: '/services/vulnerability-scanning',
+    title: 'Enterprise Vulnerability Scanning',
+    desc: 'Continuous attack-surface mapping with CVE tracking and risk-based prioritisation across your entire external footprint.',
+    points: [
+      'Asset discovery and shadow-IT monitoring',
+      'Live CVE correlation with exploitability scoring',
+      'Monthly trend reporting for leadership',
+    ],
+  },
+  {
+    href: '/services/identity-access-management',
+    title: 'Identity & Access Management',
+    desc: 'IAM posture assessment and hardening for Keycloak, OIDC, SAML, and multi-cloud estates — audit-ready by design.',
+    points: [
+      'Entitlement reviews against real usage data',
+      'Token, session, and federation hardening',
+      'ISO 27001 / SOC 2 / NIS2 evidence support',
+    ],
+  },
+]
 
 const features = [
   {
@@ -57,22 +100,54 @@ export default function ServicesPage() {
   return (
     <>
       <SiteNav />
-      <main>
+      <main className="content-page">
+        <div className="container">
+          <Breadcrumb items={[{ name: 'Services', href: '/services' }]} />
 
-        {/* Hero */}
-        <section className="scanner-hero">
+          <h1 className="page-h1">Cybersecurity Services</h1>
+          <p className="page-lede">
+            Kiwi Defence is a cybersecurity company based in Brașov, Romania,
+            serving enterprise teams across the EU. Our services — automated
+            penetration testing, enterprise vulnerability scanning, and identity
+            &amp; access management security — are built on one principle:
+            findings only matter if they reduce real, exploitable risk.
+          </p>
+
+          <div className="service-hub-grid">
+            {serviceCards.map((card) => (
+              <article className="service-hub-card" key={card.href}>
+                <h2>
+                  <Link href={card.href}>{card.title}</Link>
+                </h2>
+                <p>{card.desc}</p>
+                <ul>
+                  {card.points.map((pt) => (
+                    <li key={pt}>{pt}</li>
+                  ))}
+                </ul>
+                <Link href={card.href} className="service-more">
+                  Explore {card.title.toLowerCase()} →
+                </Link>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        {/* Kiwi Scanner platform */}
+        <section className="section scanner-hero" style={{ minHeight: 'auto', paddingTop: '4rem' }}>
           <div className="container">
-            <div className="section-label" style={{ textAlign: 'center' }}>Platform product</div>
-            <h1 className="scanner-title">
+            <div className="section-label">Platform product</div>
+            <h2 className="scanner-title" style={{ textAlign: 'left', fontSize: '2.25rem' }}>
               <span>Kiwi Scanner</span>
               <span className="accent">Know your weaknesses first</span>
-            </h1>
-            <p className="scanner-subtitle">
-              Authorized vulnerability assessment for web applications and IAM posture.
-              A native Kiwi Engine LLM agent plans, executes, and validates every scan —
-              so you get answers, not noise.
+            </h2>
+            <p className="page-lede" style={{ maxWidth: '680px' }}>
+              Our standalone scanning platform: a native Kiwi Engine LLM agent,
+              IAM posture playbooks, and a web portal for runs, findings, and
+              reports. Invite-only access for authorized testing of systems you
+              own or are permitted to assess.
             </p>
-            <div className="hero-actions" style={{ justifyContent: 'center' }}>
+            <div className="hero-actions">
               <a href={scannerUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
                 Start 7-day free trial →
               </a>
@@ -80,20 +155,13 @@ export default function ServicesPage() {
                 See pricing
               </Link>
             </div>
-            <p className="scanner-fineprint">
-              Free for 7 days · No credit card required · Authorized testing only
-            </p>
           </div>
         </section>
 
-        {/* Features */}
-        <section className="section">
+        <section className="section" style={{ paddingTop: '3rem' }}>
           <div className="container">
             <div className="section-label">Capabilities</div>
             <h2 className="section-title">Built to find what others miss</h2>
-            <p className="section-subtitle">
-              Everything ships in one platform — no plugin sprawl, no separate tools to babysit.
-            </p>
             <div className="scanner-features">
               {features.map((f) => (
                 <div className="scanner-feature" key={f.num}>
@@ -106,8 +174,7 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        {/* How it works */}
-        <section className="section">
+        <section className="section" style={{ paddingTop: '0' }}>
           <div className="container">
             <div className="section-label">How it works</div>
             <h2 className="section-title">From target to report in three steps</h2>
@@ -120,34 +187,13 @@ export default function ServicesPage() {
                 </div>
               ))}
             </div>
-            <div className="scanner-steps-cta">
-              <Link href="/pricing" className="btn btn-secondary">
-                Compare plans →
-              </Link>
-            </div>
           </div>
         </section>
 
-        {/* Final CTA */}
-        <section className="section scanner-cta">
-          <div className="container">
-            <div className="section-label" style={{ textAlign: 'center' }}>Get started</div>
-            <h2 className="section-title" style={{ textAlign: 'center' }}>
-              Ready to find out what&apos;s hiding in your stack?
-            </h2>
-            <p className="section-subtitle" style={{ margin: '0 auto 2.5rem', textAlign: 'center' }}>
-              Spin up a trial in minutes. Everything you need to start scanning, with no credit card required.
-            </p>
-            <div className="hero-actions" style={{ justifyContent: 'center' }}>
-              <a href={scannerUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                Start your free trial →
-              </a>
-              <Link href="/#contact" className="btn btn-secondary">
-                Talk to the team
-              </Link>
-            </div>
-          </div>
-        </section>
+        <CtaBand
+          title="Not sure which service fits?"
+          subtitle="Book a free security assessment — we'll review your environment and recommend the right starting point within 24 hours."
+        />
       </main>
       <SiteFooter />
     </>
